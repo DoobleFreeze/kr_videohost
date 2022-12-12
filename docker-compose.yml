@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  db:
+    build: ./database/
+  web:
+    build:
+      context: web
+    volumes:
+      - ./video_storage:/opt/app/video_storage
+    expose:
+      - 5000
+    depends_on:
+      - db
+  nginx:
+    build: ./nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - web
+  redis:
+    hostname: REDIS
+    build: ./redis
+    volumes:
+      - ./redis:/etc/redis
+    depends_on:
+      - web
