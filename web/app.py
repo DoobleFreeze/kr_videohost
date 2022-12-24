@@ -138,7 +138,7 @@ def register():
                     session = db_session.create_session()
                     user = session.query(Users).filter(Users.user_name == r_json['name']).first()
                     if user:
-                        json_response = {"error": f'User {r_json["user"]} already exists'}
+                        json_response = {"error": f'User {r_json["name"]} already exists'}
                         return make_response(jsonify(json_response), 400)
                     new_user = Users(user_name=r_json['name'],
                                      user_password=r_json['password'])
